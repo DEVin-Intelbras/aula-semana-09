@@ -1,4 +1,6 @@
+import { useEffect } from 'react';
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useAutenticacao } from '../../context/autenticacao/useAutenticacao';
 import styles from './Login.module.css';
 
@@ -6,7 +8,18 @@ export const Login = () => {
   const [login, setLogin] = useState('');
   const [senha, setSenha] = useState('');
 
-  const { onLogin } = useAutenticacao();
+  const { onLogin, isAutenticado, isLoading } = useAutenticacao();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!isLoading && isAutenticado) {
+      navigate('/', { replace: true });
+    }
+  }, [isLoading]);
+
+  if (isLoading) {
+    return <p>carregando...</p>;
+  }
 
   const fazLogin = (event) => {
     event.preventDefault();
@@ -24,6 +37,8 @@ export const Login = () => {
     onLogin(login);
     setLogin('');
     setSenha('');
+
+    navigate('/', { replace: true });
   };
 
   return (

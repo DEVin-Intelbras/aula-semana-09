@@ -6,6 +6,7 @@ const CHAVE_USUARIO = 'usuario';
 
 export const AutenticacaoProvider = ({ children }) => {
   const [usuarioAutenticado, setUsuarioAutenticado] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const usuario = localStorage.getItem(CHAVE_USUARIO);
@@ -13,6 +14,7 @@ export const AutenticacaoProvider = ({ children }) => {
     if (usuario) {
       setUsuarioAutenticado(JSON.parse(usuario));
     }
+    setTimeout(() => setIsLoading(false), 1000);
   }, []);
 
   const handleLogin = (nome) => {
@@ -36,6 +38,7 @@ export const AutenticacaoProvider = ({ children }) => {
         isAutenticado: !!usuarioAutenticado,
         onLogin: handleLogin,
         onLogout: handleLogout,
+        isLoading,
       }}
     >
       {children}

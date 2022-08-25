@@ -15,7 +15,7 @@ function App() {
             <Router />
           </main>
 
-          <footer>@DEVinHouse</footer>
+          {/* <footer>@DEVinHouse</footer> */}
         </AutenticacaoProvider>
       </div>
     </BrowserRouter>
